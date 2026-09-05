@@ -2,6 +2,7 @@ package com.problemhub.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +25,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // stateless bearer-token API, not cookie-based sessions
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("GET", "/api/problems/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/problems/**").permitAll()
                 .anyRequest().authenticated()
             )
             // Verifies tokens against Supabase's public JWKS endpoint — handles
